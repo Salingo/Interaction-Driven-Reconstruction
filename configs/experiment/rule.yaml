@@ -1,0 +1,66 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /data: rule_score.yaml
+  - override /model: rule.yaml
+  - override /callbacks: default.yaml
+  - override /trainer: ddp.yaml
+#  - override /logger: wandb.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+tags: ["rule", "score", "pointNeXt"]
+
+seed: 888
+ckpt_path: /mnt/disk3/zihao/dev/pointnet_tem/logs/rule_test3/train/2023-05-21_13-47-40/checkpoints/last.ckpt
+
+paths:
+  project_tag: rule_test_outline100
+
+callbacks:
+  model_checkpoint:
+    monitor: "val/loss_epoch"
+
+trainer:
+  strategy: ddp_spawn_find_unused_parameters_true
+  min_epochs: 1
+  max_epochs: 3
+  check_val_every_n_epoch: 1
+  devices: 4
+
+model:
+  num_points: 4096
+  optimizer:
+    lr: 1e-5
+
+  score_weight: /mnt/disk3/zihao/dev/pointnet_tem/logs/rule_test/train/2023-05-20_13-38-56/pths/1_score.pth
+  actor_weight: /mnt/disk3/zihao/dev/pointnet_tem/logs/rule_test/train/2023-05-20_13-38-56/pths/1_actor.pth
+  pointNeXt_weight: /mnt/disk3/zihao/dev/pointnet_tem/logs/rule_test/train/2023-05-20_13-38-56/pths/1_pointNeXt.pth
+  critic_weight: /mnt/disk3/zihao/dev/pointnet_tem/logs/rule_test/train/2023-05-20_13-38-56/pths/1_critic.pth
+  train_critic: False
+  net:
+    _target_: src.models.components.Model.Network
+    pointNeXt_cfg: /mnt/disk3/zihao/dev/pointnet_tem/model_cfg/pointNext.yaml
+    mlp_dim_critic: 64
+    mlp_dim_actor: 256
+    mlp_dim_score: 256
+
+
+data:
+  data_dir: ${paths.data_dir_score}
+  batch_size: 16
+  num_workers: 0
+  pin_memory: True
+
+logger:
+  wandb:
+    tags: ${tags}
+    group: "rule"
+  aim:
+    experiment: "rule"
+
+# train: False

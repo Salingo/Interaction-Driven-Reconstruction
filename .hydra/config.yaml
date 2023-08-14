@@ -1,0 +1,100 @@
+task_name: train
+tags:
+- com
+- pointNeXt
+train: true
+test: true
+compile: false
+ckpt_path: null
+seed: null
+data:
+  _target_: src.data.com_datamodule.ComDataModule
+  data_dir: ${paths.data_dir_incom}
+  com_data_dir: ${paths.data_dir_com}
+  state_dir: ${paths.state_dir}
+  batch_size: 4
+  num_workers: 0
+  pin_memory: true
+model:
+  _target_: src.models.com_module.ComLitModule
+  num_points: 4096
+  save_dir: ${paths.output_dir}
+  optimizer:
+    _target_: torch.optim.Adam
+    _partial_: true
+    lr: 0.001
+    weight_decay: 0.0001
+  scheduler:
+    _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+    _partial_: true
+    mode: min
+    factor: 0.1
+    patience: 10
+  net:
+    _target_: src.models.components.SeedFormer.SeedFormer
+    feat_dim: 256
+    embed_dim: 128
+    num_p0: 1024
+    n_knn: 20
+    up_factors:
+    - 1
+    - 2
+    - 2
+callbacks:
+  model_checkpoint:
+    _target_: lightning.pytorch.callbacks.ModelCheckpoint
+    dirpath: ${paths.output_dir}/checkpoints
+    filename: epoch_{epoch:03d}
+    monitor: val/loss
+    verbose: false
+    save_last: true
+    save_top_k: 1
+    mode: min
+    auto_insert_metric_name: false
+    save_weights_only: false
+    every_n_train_steps: null
+    train_time_interval: null
+    every_n_epochs: null
+    save_on_train_epoch_end: null
+  rich_progress_bar:
+    _target_: lightning.pytorch.callbacks.RichProgressBar
+logger:
+  wandb:
+    _target_: lightning.pytorch.loggers.wandb.WandbLogger
+    save_dir: ${paths.output_dir}
+    offline: false
+    id: null
+    anonymous: null
+    project: lightning-hydra-template
+    log_model: false
+    prefix: ''
+    group: ''
+    tags: []
+    job_type: ''
+trainer:
+  _target_: lightning.pytorch.trainer.Trainer
+  default_root_dir: ${paths.output_dir}
+  min_epochs: 1
+  max_epochs: 25
+  accelerator: gpu
+  devices: 4
+  check_val_every_n_epoch: 1
+  deterministic: false
+paths:
+  root_dir: ${oc.env:PROJECT_ROOT}
+  data_dir: ${paths.root_dir}/data
+  state_dir: ${paths.root_dir}/data
+  base_data_dir: /mnt/disk3/zihao/20220610data/InterRecon
+  data_dir_score: ${paths.data_dir}/score_front/
+  data_dir_seg: ${paths.base_data_dir}/pc_vscan_iter_front/
+  data_dir_incom: ${paths.base_data_dir}/pc_vscan_iter_front_split/
+  data_dir_com: ${paths.base_data_dir}/obj_iter_part_pts/
+  log_dir: ${paths.root_dir}/logs/
+  config_dir: ${paths.root_dir}/configs/
+  output_dir: ${hydra:runtime.output_dir}
+  work_dir: ${hydra:runtime.cwd}
+  project_tag: com
+extras:
+  ignore_warnings: false
+  enforce_tags: true
+  print_config: false

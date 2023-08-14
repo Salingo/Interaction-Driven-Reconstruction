@@ -1,0 +1,34 @@
+# path to root directory
+# this requires PROJECT_ROOT environment variable to exist
+# you can replace it with "." if you want the root to be the current working directory
+root_dir: ${oc.env:PROJECT_ROOT}
+
+# path to data directory
+data_dir: ${paths.root_dir}/data
+state_dir: ${paths.root_dir}/data
+
+motion_dir: /mnt/disk3/zihao/20220610data/InterRecon/motion_split
+
+base_data_dir: /mnt/disk3/zihao/20220610data/InterRecon
+
+data_dir_score: ${paths.data_dir}/score_front/
+data_dir_seg: ${paths.base_data_dir}/pc_vscan_iter_seg/
+
+data_dir_incom: /mnt/disk3/zihao/20220610data/InterRecon/pc_vscan_iter_com
+data_dir_com: /mnt/disk3/zihao/20220610data/InterRecon/obj_iter_part_pts
+
+# path to logging directory
+log_dir: ${paths.root_dir}/logs/
+
+
+config_dir: ${paths.root_dir}/configs/
+# path to output directory, created dynamically by hydra
+# path generation pattern is specified in `configs/hydra/default.yaml`
+# use it to store all files generated during the run, like ckpts and metrics
+output_dir: ${hydra:runtime.output_dir}
+
+# path to working directory
+work_dir: ${hydra:runtime.cwd}
+
+# project tag
+project_tag: unknown

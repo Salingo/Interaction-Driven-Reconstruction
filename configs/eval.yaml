@@ -1,0 +1,45 @@
+# @package _global_
+
+defaults:
+  - _self_
+  - data: rule_score.yaml # choose datamodule with `test_dataloader()` for evaluation
+  - model: rule.yaml
+  - logger: null
+  - trainer: gpu.yaml
+  - paths: default.yaml
+  - extras: default.yaml
+  - hydra: default.yaml
+  - experiment: null
+  
+task_name: "eval"
+
+# passing checkpoint path is necessary for evaluation
+ckpt_path: /mnt/disk3/zihao/dev/pointnet_tem/logs/train/runs/2023-05-04_15-46-48/checkpoints/last.ckpt
+
+
+tags: ["rule", "score", "pointNeXt"]
+
+seed: 12345
+
+trainer:
+  min_epochs: 125
+  max_epochs: 125
+  check_val_every_n_epoch: 1
+
+model:
+  train_critic: False
+  num_points: 4096
+  optimizer:
+    lr: 0.00001
+  net:
+    train_critic: False
+    mlp_dim_critic: 64
+    mlp_dim_actor: 64
+    mlp_dim_score: 64
+
+data:
+  data_dir: ${paths.data_dir_score}
+  batch_size: 8
+  num_workers: 0
+  pin_memory: True
+

@@ -49,3 +49,6 @@ source install_openpoints.sh
 python src/train.py experiment=seg_baseline
 
 ```
+
+!!! Note
+> This is an incomplete version, please wait for the follow-up update for more details

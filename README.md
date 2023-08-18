@@ -43,7 +43,7 @@ source install_openpoints.sh
 
 ```
 
-## 🚀  Quickstart
+## 🚀 Quickstart
 
 ```bash
 python src/train.py experiment=seg_baseline

@@ -1,8 +1,0 @@
-_target_: src.data.com_datamodule.ComDataModule
-
-data_dir: ${paths.data_dir_incom}
-com_data_dir: ${paths.data_dir_com}
-state_dir: ${paths.state_dir}
-batch_size: 4
-num_workers: 32
-pin_memory: True

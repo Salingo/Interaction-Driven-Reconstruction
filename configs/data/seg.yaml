@@ -1,7 +1,0 @@
-_target_: src.data.seg_datamodule.SegDataModule
-
-data_dir: ${paths.data_dir_seg}
-state_dir: ${paths.state_dir}
-batch_size: 4
-num_workers: 32
-pin_memory: True

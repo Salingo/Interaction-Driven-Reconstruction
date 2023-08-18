@@ -18,37 +18,6 @@
     <img src="./images/paper.png", width="800">
 </div>
 
-## 📌 Environment preparation
+<br>
 
-```bash
-# clone project
-git clone https://github.com/Salingo/Interaction-Driven-Reconstruction.git
-cd Interaction-Driven-Reconstruction
-
-# [OPTIONAL] create conda environment
-conda create -n IDR python=3.10
-conda activate IDR
-
-pip install -r requirements.txt
-
-# install pytorch according to instructions
-# [SEE] https://pytorch.org/get-started/
-# [NOTE] we use the pytorch 2.0 and cuda 11.7 in ubuntu 20.04
-# conda install -y pytorch=2.0.1 torchvision cudatoolkit=11.7 -c pytorch -c nvidia
-# pip install torch-scatter -f https://data.pyg.org/whl/torch-2.0.1+cu117.html
-
-# install openpoints
-git clone https://github.com/guochengqian/openpoints.git
-source install_openpoints.sh
-
-```
-
-## 🚀 Quickstart
-
-```bash
-python src/train.py experiment=seg_baseline
-
-```
-
-!!! Note
-> This is an incomplete version, please wait for the follow-up update for more details
+**Full code coming soon**

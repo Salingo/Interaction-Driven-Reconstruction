@@ -15,9 +15,9 @@
   </p>
   <h2 align="center">SIGGRAPH Aisa 2023</h2>
   <div align="center">
-    <img src="./images/paper.png", width="800">
+    <img src="./paper.png", width="800">
 </div>
 
 <br>
 
-**Full code coming soon**
+**Full code coming soon...**

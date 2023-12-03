@@ -90,6 +90,15 @@ python gen_score_batch.py
 ```
 After executing the above code, we should have obtained a dataset in ```./data/action```.
 ### 3.2 Train the Critic Network
+Before starting training, you need to modify the training configuration in the ```./config/experiment```. Our code is based on [lightning-hydra-template](https://github.com/ashleve/lightning-hydra-template), if you don't know how to modify the configuration, please refer to the repository.
+```bash
+# In the root directory
+python src/train.py experiment=action_critic
+```
+After the training, you cloud see the result in ```./logs```. 
+
+### 3.2 Train the Action Network
+Training the action network is based on the critic network. You should find the best ckpt file of the critic network in the ```./logs```. And then setting it in the ```./config/experiment``` .
 ```bash
 # In the root directory
 python src/train.py experiment=action_critic

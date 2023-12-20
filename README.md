@@ -105,12 +105,13 @@ python src/train.py experiment=action_critic
 
 ## 4 Segmentation Network
 ### 4.1 Generate the dataset
+In order to train the segmentation neural network more conveniently, we preprocessed the original data and obtained the dataset of the segmentation network.
 ```bash
 # In the root directory.
 python gen_data/seg/gen_seg_data_batch.py
 ```
 ### 4.2 Train the Segmentation Network
-
+After modifying the configuration file in ```./configs/experiment```, you can use the following command to train
 ```bash
 # In the root directory
 python src/train.py experiment=seg

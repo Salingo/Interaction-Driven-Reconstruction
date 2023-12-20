@@ -80,7 +80,7 @@ data:
       "trashcan",
     ]
   batch_size: 24
-  num_workers: 0
+  num_workers: 5
   pin_memory: True
 # ====================================================
 logger:

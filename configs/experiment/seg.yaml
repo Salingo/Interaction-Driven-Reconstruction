@@ -1,0 +1,73 @@
+# @package _global_
+
+# to execute this experiment run:
+# python train.py experiment=example
+
+defaults:
+  - override /callbacks: default.yaml
+  - override /trainer: ddp.yaml
+  # - override /logger: wandb.yaml
+
+# all parameters below will be merged with parameters from default configurations set above
+# this allows you to overwrite only specified parameters
+
+tags: ["seg", "pointNeXt"]
+
+seed: 888
+ckpt_path: null
+
+
+paths:
+  exp_tag: seg
+
+callbacks:
+  early_stopping:
+    monitor: "val/seg_loss"
+    mode: "min"
+  model_checkpoint:
+    monitor: "val/seg_loss"
+    mode: "min"
+
+trainer:
+  min_epochs: 1
+  max_epochs: 25
+  check_val_every_n_epoch: 1
+  devices: 8
+
+#=============================================
+data:
+  _target_: src.data.seg_datamodule.SegDataModule
+
+  data_dir: ${paths.seg_data_dir}
+  motion_dir: ${paths.action_motion_dir}
+  state_dir: ${paths.data_dir}
+  batch_size: 16
+  num_workers: 5
+  pin_memory: True
+#==============================================
+model:
+  _target_: src.models.seg_module.SegLitModule
+
+  num_points: 4096
+  save_dir: ${paths.output_dir}
+
+  optimizer:
+    _target_: torch.optim.Adam
+    _partial_: true
+    lr: 0.001
+    weight_decay: 1.0e-4
+
+  scheduler:
+    _target_: torch.optim.lr_scheduler.ReduceLROnPlateau
+    _partial_: true
+    mode: min
+    factor: 0.1
+    patience: 10
+
+  net:
+    _target_: src.models.components.seg_network.SegNet
+    num_points: 4096
+    pointNeXt_cfg: /home/ubuntu/zihao/dev/Interaction-Driven-Reconstruction/model_cfg/pointNext_seg.yaml
+    mlp_dim: 256
+    use_joint: False
+#==============================================

@@ -7,6 +7,7 @@ root_dir: ${oc.env:PROJECT_ROOT}
 data_dir: ${paths.root_dir}/data/
 action_data_dir: ${paths.data_dir}/action/
 action_motion_dir: ${paths.root_dir}/data_raw/motion
+seg_data_dir: ${paths.data_dir}/seg/
 
 # path to logging directory
 log_dir: ${paths.root_dir}/logs/

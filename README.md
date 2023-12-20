@@ -85,8 +85,7 @@ Interaction-Driven-Reconstruction
 Rather than downloading our data, it is more convenient to generate it manually.
 ```bash
 # In the root directory.
-cd gen_data/action
-python gen_score_batch.py
+python gen_data/action/gen_score_batch.py
 ```
 After executing the above code, we should have obtained a dataset in ```./data/action```.
 ### 3.2 Train the Critic Network
@@ -102,4 +101,23 @@ Training the action network is based on the critic network. You should find the 
 ```bash
 # In the root directory
 python src/train.py experiment=action_critic
+```
+
+## 4 Segmentation Network
+### 4.1 Generate the dataset
+```bash
+# In the root directory.
+python gen_data/seg/gen_seg_data_batch.py
+```
+### 4.2 Train the Segmentation Network
+
+```bash
+# In the root directory
+python src/train.py experiment=seg
+
+# Or 
+python src/train.py experiment=seg_wom
+
+# Or 
+python src/train.py experiment=seg_baseline
 ```

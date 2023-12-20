@@ -6,11 +6,11 @@ from multiprocessing.dummy import Pool
 import time 
 from tqdm import tqdm
 
-SAVE_DIR = "../../data/action"
-PC_DATA_DIR = "../../data_raw/pc_vscan_iter_front"
+SAVE_DIR = "./data/action"
+PC_DATA_DIR = "./data_raw/pc_vscan_iter_front"
 
 python_command = "python"
-gen_py_file_path = "./gen_score.py"
+gen_py_file_path = "./gen_data/action/gen_score.py"
 
 category_list = ['dishwasher','microwave','oven','refrige','table','trashcan', 'storage']
 # category_list = ['trashcan']

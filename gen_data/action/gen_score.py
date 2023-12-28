@@ -10,7 +10,7 @@ MAX_LINK_NUM = 30
 
 MOTION_DIR = "./data_raw/motion"
 PCS_DIR = "./data_raw/pc_vscan_iter_front"
-SAVE_DIR = "./data/action2"
+SAVE_DIR = "./data/action"
 
 # ALL_CATE_LIST = ['dishwasher','kitchenpot','microwave','oven','refrige','storage','table','trashcan']
 ALL_CATE_LIST = ['table']

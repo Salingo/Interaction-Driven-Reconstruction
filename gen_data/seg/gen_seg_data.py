@@ -8,7 +8,7 @@ import sys
 data_dir = "./data_raw/pc_vscan_iter_front"
 motion_dir = "./data_raw/motion"
 
-save_dir = "./data/seg"
+save_dir = "./data/seg2"
 
 N = 4096
 

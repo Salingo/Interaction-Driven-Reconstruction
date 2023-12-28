@@ -41,7 +41,7 @@ _A fully automatic, active 3D reconstruction method._
 
 # 📌  Introduction
 <div align="center">
-  <img src="./images/image.png" , width="800" style="border-radius: 10px;"/>
+  <img src="./images/teaser.png" , width="800" style="border-radius: 10px;"/>
 </div>
 
 We introduce a fully automatic, active 3D reconstruction method which integrates interaction perception from depth sensors, real robot-object interaction(e.g., opening drawers), and on-the-fly scanning and reconstruction to obtain a complete geometry acquisition of both the object exteriors and interiors.
@@ -122,3 +122,19 @@ python src/train.py experiment=seg_wom
 # Or 
 python src/train.py experiment=seg_baseline
 ```
+## 5 Completion Network
+### 5.1 Generate the dataset
+Generate the dataset of completion network is based on the dataset of segmentation network. After generating the dataset of segmentation network in 4.1, you could run the following code:
+```bash
+# In the root directory
+python gen_data/com/gen_com_data.py
+
+# Normalized  
+python gen_data/com/norm_com_data.py
+```
+### 5.2 Train the completion network
+```bash
+# In the root directory
+python src/train experiment=com
+```
+<br>
